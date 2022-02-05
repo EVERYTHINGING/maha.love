@@ -1,3 +1,5 @@
+///////TODO performance enhancements
+
 <template>
   <div class="grid">
     <div ref="viewport" class="viewport" @scroll="handleScroll">
@@ -54,7 +56,6 @@ export default {
           p.y = (p.y - (distanceY/prox)*(maxProx/prox)*speed*speedMulti) - ((p.y - p.origY)/2);	
       }
 
-      
       if(this.$refs.item){
         for(j = 0; j < this.$refs.item.length; j++){
           item = this.$refs.item[j];
@@ -80,7 +81,6 @@ export default {
     this.mouse = useMouse();
     this.width = numItemsX*itemWidth;
     this.height = numItemsY*itemHeight;
-    console.log(this.$refs);
     
     for(y = 0; y < numItemsY+1; y++){				
       pointsArrayXY[y] = [];

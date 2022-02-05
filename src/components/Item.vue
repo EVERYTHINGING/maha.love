@@ -26,11 +26,9 @@ export default {
   methods: {
       handleClick(){
         this.isSelected = !this.isSelected;
-        console.log('click');
       },
       setPoints(points){
           this.points = points;
-          console.log(this.points);
       },
       draw(){
           Helpers.ComputeMatrix.transform2d(this.$el, 
