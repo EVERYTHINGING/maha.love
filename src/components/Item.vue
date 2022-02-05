@@ -1,6 +1,8 @@
+//////TODO: use points as prop?
+
 <template>
   <div @click="handleClick" class="item" :class="{ selected: isSelected }" :style="'background-color:'+bgColor+');'">
-    <div v-if="item.name" class="name">{{ item.name }}</div>
+    <!-- <div v-if="item.name" class="name">{{ item.name }}</div> -->
     <Grid v-if="item.children" :items="item.children" />
     <img v-else :src="item.image" />
   </div>
@@ -58,10 +60,20 @@ export default {
 	position: absolute;
 	top: 0px;
 	left: 0px;
+  width: 90vw;
+  height: 90vh;
 	margin: 0;
 	overflow: hidden;
 	cursor: pointer;
-	perspective: 500;
+	-webkit-perspective: 500;
+	-moz-perspective: 500;
+	-o-perspective: 500;
+	-ms-perspective: 500;
+	/* perspective: 500; */
+	-webkit-transform-origin: left top;
+	-moz-transform-origin: left top;
+	-o-transform-origin: left top;
+	-ms-transform-origin: left top;
 	transform-origin: left top;
 
 	display: flex;
@@ -79,8 +91,8 @@ export default {
 
 img {
 	display: block;
+	height: auto;
 	max-width: 100%;
-	max-height: 100%;
-	margin: 0 auto;
+	/* margin: 0 auto; */
 }
 </style>

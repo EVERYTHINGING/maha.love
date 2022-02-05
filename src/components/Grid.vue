@@ -1,10 +1,12 @@
 <template>
   <div class="grid">
     <div ref="viewport" class="viewport" @scroll="handleScroll">
-      <div ref="items" class="items" :style="'width:'+width+'px;'+'height:'+height+'px;'">
-        <template v-for="(item, index) in items" :key=index>
-          <Item ref="item" :item=item />
-        </template>
+      <div class="items-wrapper">
+        <div ref="items" class="items" :style="'width:'+width+'px;'+'height:'+height+'px;'">
+          <template v-for="(item, index) in items" :key=index>
+            <Item ref="item" :item=item />
+          </template>
+        </div>
       </div>
     </div>
   </div>
@@ -36,11 +38,11 @@ export default {
     },
     updatePoints() {
       let i, j, p, item, distanceX, distanceY, prox;
-      let maxProx = 300;
+      let maxProx = 800;
       let speed = -100;
       let speedMulti = 1;
       let mouseX = this.mouse.x.value - this.$refs.items.offsetLeft;
-      let mouseY = this.mouse.y.value + this.$refs.viewport.scrollTop;
+      let mouseY = this.mouse.y.value + this.$refs.viewport.scrollTop - this.$refs.items.offsetTop;
 
       for(i = 0; i < this.points.length; i++){
           p = this.points[i];
@@ -112,12 +114,6 @@ export default {
 </script>
 
 <style scoped>
-.items {
-	transform-style: preserve-3d;
-	position: relative;
-	margin: 0 auto;
-}
-
 .grid {
 	position: absolute;
 	top: 0px;
@@ -139,5 +135,16 @@ export default {
 .viewport.active {
 	border: solid 1px yellow;
 	overflow-y: scroll;
+}
+
+.items-wrapper {
+  margin-top: 300px;
+  margin-bottom: 300px;
+}
+
+.items {
+	transform-style: preserve-3d;
+	position: relative;
+	margin: 0 auto;
 }
 </style>
