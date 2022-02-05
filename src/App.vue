@@ -31,4 +31,10 @@ body {
   width: 100vw;
   height: 100vh;
 }
+
+.fps {
+  font-size: 30px !important;
+  bottom: auto !important;
+  top: 0px;
+}
 </style>

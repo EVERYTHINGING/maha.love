@@ -48,3 +48,15 @@ Helpers.Point = function(x, y){
  		return (this.x === p.x && this.y === p.y);
  	};
 }
+
+Helpers.getAbsolutePosition = function(elm) {
+    var xPos = 0, yPos = 0;
+
+    while(elm) {
+        xPos += (elm.offsetLeft - elm.scrollLeft + elm.clientLeft);
+        yPos += (elm.offsetTop - elm.scrollTop + elm.clientTop);
+        elm = elm.offsetParent;
+    }
+
+    return { x: xPos, y: yPos };
+}

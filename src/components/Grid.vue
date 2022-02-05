@@ -43,6 +43,11 @@ export default {
       let maxProx = 800;
       let speed = -100;
       let speedMulti = 1;
+      /*
+      let fullOffset = Helpers.getAbsolutePosition(this.$refs.items);
+      let mouseX = this.mouse.x.value - fullOffset.x;
+      let mouseY = this.mouse.y.value - fullOffset.y;
+      */
       let mouseX = this.mouse.x.value - this.$refs.items.offsetLeft;
       let mouseY = this.mouse.y.value + this.$refs.viewport.scrollTop - this.$refs.items.offsetTop;
 
@@ -56,6 +61,7 @@ export default {
           p.y = (p.y - (distanceY/prox)*(maxProx/prox)*speed*speedMulti) - ((p.y - p.origY)/2);	
       }
 
+      
       if(this.$refs.item){
         for(j = 0; j < this.$refs.item.length; j++){
           item = this.$refs.item[j];
