@@ -4,20 +4,31 @@
 
 <script>
 import Grid from '@/components/Grid.vue'
+import { TreeData } from '@/data.js'
 
 export default {
   name: 'App',
   components: { Grid },
   data: function() {
     return {
-      items: window.treeData
+      items: TreeData
     }
   },
 }
 </script>
 
 <style>
-#app {
+body {
+  background-color: black;
+  color: white;
+  font-size: 3em;
+}
 
+#app {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
 }
 </style>
