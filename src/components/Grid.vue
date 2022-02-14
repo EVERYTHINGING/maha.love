@@ -1,7 +1,7 @@
 ///////TODO performance enhancements
 
 <template>
-  <div class="grid" :class="{ 'active': isActive, 'has-selected-item': hasSelectedItem }">
+  <div class="grid" :class="{ 'active': isActive, 'has-selected-item': selectedItem != null }">
     <div ref="viewport" class="viewport" @scroll="handleScroll">
       <div class="items-wrapper">
         <div ref="items" class="items" :style="'width:'+width+'px;'+'height:'+height+'px;'">
@@ -34,7 +34,7 @@ export default {
     return {
       width: 0,
       height: 0,
-      hasSelectedItem: false
+      selectedItem: null
     }
   },
   methods: {
@@ -43,7 +43,6 @@ export default {
     },
     handleSelectedItem(item){
       this.selectedItem = item.isSelected ? item : null;
-      this.hasSelectedItem = item.isSelected;
 
       if(item.isSelected){
         var tweenDelayMax = 200;
