@@ -47,7 +47,12 @@ Helpers.Point = function(x, y){
 	this.equals = function(p){
  		return (this.x === p.x && this.y === p.y);
  	};
+
+    this.isAtOrigin = function(){
+        return (this.x === this.origX && this.y === this.origY);
+    };
 }
+
 
 Helpers.getAbsolutePosition = function(elm) {
     var xPos = 0, yPos = 0;

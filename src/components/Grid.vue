@@ -3,7 +3,7 @@
 
 <template>
   <div class="grid" :class="{ 'active': isActive, 'has-selected-item': selectedItem != null }">
-    <div ref="viewport" class="viewport" @scroll="handleScroll">
+    <div ref="viewport" class="viewport">
       <div class="items-wrapper">
         <div ref="items" class="items" :style="'width:'+width+'px;'+'height:'+height+'px;'">
           <template v-for="(item, index) in items" :key=index>
@@ -39,9 +39,6 @@ export default {
     }
   },
   methods: {
-    handleScroll() {
-
-    },
     handleSelectedItem(item){
       this.selectedItem = item.isSelected ? item : null;
 
@@ -111,6 +108,7 @@ export default {
         }, tweenSpeed+maxDelay+100);
       }
     },
+
     updatePoints() {
       TWEEN.update();
       let i, j, p, item, distanceX, distanceY, prox, centerX, centerY, angle;
@@ -159,6 +157,7 @@ export default {
     }
 
   },
+
   mounted() {
     this.points = [];
     let numItems = this.items.length;

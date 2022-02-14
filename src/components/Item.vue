@@ -37,6 +37,7 @@ export default {
           this.points = points;
       },
       draw(){
+        //if(!this.points.tl.isAtOrigin || !this.points.tr.isAtOrigin || !this.points.bl.isAtOrigin || !this.points.br.isAtOrigin){
           Helpers.ComputeMatrix.transform2d(this.$el, 
                     this.points.tl.x,
                     this.points.tl.y,
@@ -47,6 +48,7 @@ export default {
                     this.points.br.x,
                     this.points.br.y,
                     0);
+        //}
       }
   },
   setup() {
