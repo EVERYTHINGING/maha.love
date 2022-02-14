@@ -3,7 +3,7 @@
 <template>
   <div @click="handleClick" class="item" :class="{ selected: isSelected }" :style="'background-color:'+bgColor+');'">
     <!-- <div v-if="item.name" class="name">{{ item.name }}</div> -->
-    <Grid v-if="item.children" :items="item.children" />
+    <Grid v-if="item.children" :items="item.children" :isActive="isSelected" />
     <img v-else :src="item.image" />
   </div>
 </template>
@@ -15,17 +15,23 @@ import { Helpers } from '@/helpers.js'
 export default {
   name: 'Item',
   components: { Grid },
+  emits: ['selected'],
   props: {
-    item: Object
+    item: Object,
+    isSelectable: Boolean
   },
   data(){
     return {
-      isSelected: false
+      isSelected: false,
     }
   },
   methods: {
-      handleClick(){
-        this.isSelected = !this.isSelected;
+      handleClick(event){
+        if(this.isSelectable){
+          event.stopPropagation();
+          this.isSelected = !this.isSelected;
+          this.$emit('selected', this);
+        }
       },
       setPoints(points){
           this.points = points;

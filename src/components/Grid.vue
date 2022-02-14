@@ -1,12 +1,12 @@
 ///////TODO performance enhancements
 
 <template>
-  <div class="grid">
+  <div class="grid" :class="{ 'active': isActive, 'has-selected-item': hasSelectedItem }">
     <div ref="viewport" class="viewport" @scroll="handleScroll">
       <div class="items-wrapper">
         <div ref="items" class="items" :style="'width:'+width+'px;'+'height:'+height+'px;'">
           <template v-for="(item, index) in items" :key=index>
-            <Item ref="item" :item=item />
+            <Item ref="item" :item=item v-on:selected="handleSelectedItem" :isSelectable=isActive />
           </template>
         </div>
       </div>
@@ -17,6 +17,7 @@
 <script>
 import { useMouse, useRafFn } from '@vueuse/core'
 import { Helpers } from '@/helpers.js'
+const TWEEN = require('@tweenjs/tween.js')
 
 export default {
   name: 'Grid',
@@ -26,20 +27,93 @@ export default {
     this.$options.components.Item = require('@/components/Item.vue').default
   },
   props: {
-    items: Array
+    items: Array,
+    isActive: Boolean
   },
   data(){
     return {
       width: 0,
-      height: 0
+      height: 0,
+      hasSelectedItem: false
     }
   },
   methods: {
     handleScroll() {
 
     },
+    handleSelectedItem(item){
+      this.selectedItem = item.isSelected ? item : null;
+      this.hasSelectedItem = item.isSelected;
+
+      if(item.isSelected){
+        var tweenDelayMax = 200;
+        var tweenSpeed = 500;
+
+        var offsetX = 50;
+        var offsetY = 50;
+
+        var gridOffsetX = (this.$refs.items.offsetLeft)*-1;
+        var gridOffsetY = (this.$refs.viewport.scrollTop - this.$refs.items.offsetTop);
+
+        var tl = { 
+          x: gridOffsetX + offsetX,
+          y: gridOffsetY + offsetY
+        };
+
+        var tr = { 
+          x: (gridOffsetX + this.$refs.viewport.clientWidth) - offsetX,
+          y: gridOffsetY + offsetY
+        };
+
+        var bl = { 
+          x: gridOffsetX + offsetX,
+          y: gridOffsetY + (this.$refs.viewport.clientHeight - offsetY)
+        };
+
+        var br = { 
+          x: (gridOffsetX + this.$refs.viewport.clientWidth) - offsetX,
+          y: gridOffsetY + (this.$refs.viewport.clientHeight - offsetY)
+        };
+
+        var rand1 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
+        var rand2 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
+        var rand3 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
+        var rand4 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
+
+        var maxDelay = Math.max(rand1, rand2, rand3, rand4);
+
+        var tweenTL = new TWEEN.Tween(this.selectedItem.points.tl)
+                    .to({ x: tl.x, y: tl.y }, tweenSpeed)
+                    .delay(rand1)
+                    .easing(TWEEN.Easing.Elastic.Out)
+                    .start();
+        var tweenTR = new TWEEN.Tween(this.selectedItem.points.tr)
+                    .to({ x: tr.x, y: tr.y }, tweenSpeed)
+                    .delay(rand2)
+                    .easing(TWEEN.Easing.Elastic.Out)
+                    .start();
+        var tweenBR = new TWEEN.Tween(this.selectedItem.points.bl)
+                    .to({ x: bl.x, y: bl.y }, tweenSpeed)
+                    .delay(rand3)
+                    .easing(TWEEN.Easing.Elastic.Out)
+                    .start();
+        var tweenBL = new TWEEN.Tween(this.selectedItem.points.br)
+                    .to({ x: br.x, y: br.y }, tweenSpeed)
+                    .delay(rand4)
+                    .easing(TWEEN.Easing.Elastic.Out)
+                    .start();
+        
+        setTimeout(function(){
+          tweenTL.stop();
+          tweenTR.stop();
+          tweenBR.stop();
+          tweenBL.stop();
+        }, tweenSpeed+maxDelay+100);
+      }
+    },
     updatePoints() {
-      let i, j, p, item, distanceX, distanceY, prox;
+      TWEEN.update();
+      let i, j, p, item, distanceX, distanceY, prox, centerX, centerY, angle;
       let maxProx = 800;
       let speed = -100;
       let speedMulti = 1;
@@ -50,17 +124,31 @@ export default {
       */
       let mouseX = this.mouse.x.value - this.$refs.items.offsetLeft;
       let mouseY = this.mouse.y.value + this.$refs.viewport.scrollTop - this.$refs.items.offsetTop;
+      let numPoints = this.points.length;
 
-      for(i = 0; i < this.points.length; i++){
+      for(i = 0; i < numPoints; i++){
           p = this.points[i];
-          distanceX = p.x - mouseX;
-          distanceY = p.y - mouseY;
-          prox = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 
-          p.x = (p.x - (distanceX/prox)*(maxProx/prox)*speed*speedMulti) - ((p.x - p.origX)/2);
-          p.y = (p.y - (distanceY/prox)*(maxProx/prox)*speed*speedMulti) - ((p.y - p.origY)/2);	
+          if(this.selectedItem == null){
+            distanceX = p.x - mouseX;
+            distanceY = p.y - mouseY;
+            prox = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+
+            p.x = (p.x - (distanceX/prox)*(maxProx/prox)*speed*speedMulti) - ((p.x - p.origX)/2);
+            p.y = (p.y - (distanceY/prox)*(maxProx/prox)*speed*speedMulti) - ((p.y - p.origY)/2);
+
+          }else if(p != this.selectedItem.points.tl && p != this.selectedItem.points.tr && p != this.selectedItem.points.br && p != this.selectedItem.points.bl){
+            centerX = (this.selectedItem.points.tl.origX + (this.selectedItem.points.tr.origX-this.selectedItem.points.tl.origX));
+            centerY = (this.selectedItem.points.tl.origY + (this.selectedItem.points.bl.origY-this.selectedItem.points.tl.origY));
+            distanceX = p.origX - centerX;
+            distanceY = p.origY - centerY;
+            prox = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+            angle = Math.atan2(distanceY, distanceX);
+
+            p.x = (p.origX + Math.cos(angle)*(prox*this.$refs.viewport.clientWidth));
+            p.y = (p.origY + Math.sin(angle)*(prox*this.$refs.viewport.clientHeight));
+          }
       }
-
       
       if(this.$refs.item){
         for(j = 0; j < this.$refs.item.length; j++){
@@ -87,6 +175,7 @@ export default {
     this.mouse = useMouse();
     this.width = numItemsX*itemWidth;
     this.height = numItemsY*itemHeight;
+    this.selectedItem = null;
     
     for(y = 0; y < numItemsY+1; y++){				
       pointsArrayXY[y] = [];
@@ -138,9 +227,8 @@ export default {
 	overflow-y: scroll;
 }
 
-.viewport.active {
-	border: solid 1px yellow;
-	overflow-y: scroll;
+.grid.has-selected-item > .viewport {
+  overflow-y: hidden;
 }
 
 .items-wrapper {

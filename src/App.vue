@@ -1,5 +1,5 @@
 <template>
-  <Grid :items=items />
+  <Grid :items=items :isActive=true />
 </template>
 
 <script>
