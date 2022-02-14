@@ -22,7 +22,7 @@ export default {
   },
   data(){
     return {
-      isSelected: false,
+      isSelected: false
     }
   },
   methods: {
@@ -90,7 +90,7 @@ export default {
 }
 
 .item.selected {
-  border: solid 3px yellow;
+
 }
 
 img {

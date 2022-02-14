@@ -1,4 +1,5 @@
 ///////TODO performance enhancements
+///////Batch requestAnimationFrame functions without calling requestAnimationFrame multiple times
 
 <template>
   <div class="grid" :class="{ 'active': isActive, 'has-selected-item': selectedItem != null }">
@@ -240,4 +241,8 @@ export default {
 	position: relative;
 	margin: 0 auto;
 }
+
+/* .grid.has-selected-item .items:first-child {
+  transform-style: flat;
+} */
 </style>
