@@ -37,7 +37,7 @@ export default {
           this.points = points;
       },
       draw(){
-        //if(!this.points.tl.isAtOrigin || !this.points.tr.isAtOrigin || !this.points.bl.isAtOrigin || !this.points.br.isAtOrigin){
+        if(!this.points.tl.isAtOrigin() || !this.points.tr.isAtOrigin() || !this.points.bl.isAtOrigin() || !this.points.br.isAtOrigin()){
           Helpers.ComputeMatrix.transform2d(this.$el, 
                     this.points.tl.x,
                     this.points.tl.y,
@@ -48,7 +48,7 @@ export default {
                     this.points.br.x,
                     this.points.br.y,
                     0);
-        //}
+        }
       }
   },
   setup() {
@@ -75,7 +75,7 @@ export default {
 	-moz-perspective: 500;
 	-o-perspective: 500;
 	-ms-perspective: 500;
-	/* perspective: 500; */
+	perspective: 500;
 	-webkit-transform-origin: left top;
 	-moz-transform-origin: left top;
 	-o-transform-origin: left top;

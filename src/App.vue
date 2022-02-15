@@ -5,15 +5,19 @@
 <script>
 import Grid from '@/components/Grid.vue'
 import { TreeData } from '@/data.js'
+import { renderQueue } from '@/RenderQueue.js'
 
 export default {
   name: 'App',
   components: { Grid },
-  data: function() {
+  data() {
     return {
       items: TreeData
     }
   },
+  mounted(){
+    renderQueue.start();
+  }
 }
 </script>
 

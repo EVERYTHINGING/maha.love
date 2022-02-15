@@ -1,5 +1,6 @@
 /* eslint-disable */
 import { ComputeMatrix } from '@/computeMatrix.js'
+import { queue } from 'async';
 
 export let Helpers = {};
 
@@ -64,4 +65,25 @@ Helpers.getAbsolutePosition = function(elm) {
     }
 
     return { x: xPos, y: yPos };
+}
+
+Helpers.RenderQueue = function(){
+    this.queue = [];
+
+    let i = 0;
+    let loop = function(){
+        for(i = 0; i < queue.length; i++){
+            console.log(queue[i]);
+            queue[i]();
+        }
+        window.requestAnimationFrame(loop);
+    }
+
+    this.start = function(){
+        loop();
+    }
+
+    this.add = function(fn){
+        this.queue.push(fn);
+    }
 }

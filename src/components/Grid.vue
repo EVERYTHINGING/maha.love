@@ -16,8 +16,9 @@
 </template>
 
 <script>
-import { useMouse, useRafFn } from '@vueuse/core'
+import { useMouse } from '@vueuse/core'
 import { Helpers } from '@/helpers.js'
+import { renderQueue } from '@/RenderQueue.js'
 const TWEEN = require('@tweenjs/tween.js')
 
 export default {
@@ -148,6 +149,7 @@ export default {
           }
       }
       
+      //draw items
       if(this.$refs.item){
         for(j = 0; j < this.$refs.item.length; j++){
           item = this.$refs.item[j];
@@ -202,7 +204,7 @@ export default {
       }
     }
     
-    useRafFn(this.updatePoints);
+    renderQueue.add(this.updatePoints);
   }
 }
 </script>
