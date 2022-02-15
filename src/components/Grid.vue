@@ -107,8 +107,7 @@ export default {
       }
     },
 
-    updatePoints() {
-      TWEEN.update();
+    loop() {
       let i, j, p, item, distanceX, distanceY, prox, centerX, centerY, angle;
       let maxProx = 400;
       let speed = -100;
@@ -145,6 +144,9 @@ export default {
             p.y = (p.origY + Math.sin(angle)*(prox*this.$refs.viewport.clientHeight));
           }
       }
+
+      //update tween
+      TWEEN.update();
       
       //draw items
       if(this.$refs.item){
@@ -152,7 +154,7 @@ export default {
           item = this.$refs.item[j];
           item.draw();
         }	
-      }	
+      }
     }
 
   },
@@ -201,7 +203,7 @@ export default {
       }
     }
     
-    renderQueue.add(this.updatePoints);
+    renderQueue.add(this.loop);
   }
 }
 </script>

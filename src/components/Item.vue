@@ -1,6 +1,5 @@
 <template>
   <div @click="handleClick" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null ? true : false }" :style="'background-color:'+bgColor+');'">
-    <!-- <div v-if="item.name" class="name">{{ item.name }}</div> -->
     <Grid v-if="item.children" :items="item.children" :isActive="isSelected" />
     <img v-else :src="item.image" />
   </div>
