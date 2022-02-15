@@ -119,6 +119,12 @@ export default {
       */
       let mouseX = this.mouse.x.value - this.$refs.items.offsetLeft;
       let mouseY = this.mouse.y.value + this.$refs.viewport.scrollTop - this.$refs.items.offsetTop;
+
+      if(Helpers.isMobile){
+        mouseX = (this.$refs.viewport.clientWidth/2)  - this.$refs.items.offsetLeft;
+        mouseY = (this.$refs.viewport.clientHeight/2)+ this.$refs.viewport.scrollTop - this.$refs.items.offsetTop;
+      }
+
       let numPoints = this.points.length;
 
       for(i = 0; i < numPoints; i++){
@@ -163,7 +169,7 @@ export default {
     this.points = [];
     let numItems = this.items.length;
     let numItemsX = 3;
-    if(this.$refs.viewport.clientWidth < 800){ numItemsX = 1; }
+    if(Helpers.isMobile){ numItemsX = 1; }
     let itemWidthPercentage = 20;
     let itemHeightPercentage = 30;
     let maxOffset = 20;

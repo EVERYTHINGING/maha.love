@@ -29,6 +29,9 @@ Helpers.VendorTransform = Helpers.getVendorTransform();
 
 Helpers.ComputeMatrix = new ComputeMatrix(Helpers.VendorTransform);
 
+//Is Mobile?
+Helpers.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
 //IOS?
 
 Helpers.isIOS = (navigator.platform == "iPad" || navigator.platform == "iPhone" || navigator.platform == "iPod" || navigator.platform == "iPhone Simulator" || navigator.platform == "iPad Simulator");
