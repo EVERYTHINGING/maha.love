@@ -1,7 +1,11 @@
 <template>
   <div @click="handleClick" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null ? true : false }" :style="'background-color:'+bgColor+');'">
-    <Grid v-if="item.children" :items="item.children" :isActive="isSelected" />
-    <img v-else :src="item.image" />
+    <template v-if="item.children">
+      <Grid :items="item.children" :isActive="isSelected" />
+    </template>
+    <template v-else>
+      <img :src="item.image" />
+    </template>
   </div>
 </template>
 
@@ -88,7 +92,12 @@ export default {
 	z-index: 9999;	
 }
 
-.item.has-grid {
+.item.selected.has-grid {
+  cursor: w-resize;
+}
+
+.item.has-grid,
+.item.selected {
   width: 100vw;
   height: 100vh;
 }
