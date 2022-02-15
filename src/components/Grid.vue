@@ -163,6 +163,7 @@ export default {
     this.points = [];
     let numItems = this.items.length;
     let numItemsX = 3;
+    if(this.$refs.viewport.clientWidth < 800){ numItemsX = 1; }
     let itemWidthPercentage = 20;
     let itemHeightPercentage = 30;
     let maxOffset = 20;
