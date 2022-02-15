@@ -113,7 +113,7 @@ export default {
     updatePoints() {
       TWEEN.update();
       let i, j, p, item, distanceX, distanceY, prox, centerX, centerY, angle;
-      let maxProx = 800;
+      let maxProx = 400;
       let speed = -100;
       let speedMulti = 1;
       /*
