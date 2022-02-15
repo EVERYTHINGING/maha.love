@@ -6,6 +6,7 @@
 import Grid from '@/components/Grid.vue'
 import { TreeData } from '@/data.js'
 import { renderQueue } from '@/RenderQueue.js'
+const TWEEN = require('@tweenjs/tween.js')
 
 export default {
   name: 'App',
@@ -16,6 +17,7 @@ export default {
     }
   },
   mounted(){
+    renderQueue.add(function(){ TWEEN.update(); })
     renderQueue.start();
   }
 }

@@ -150,9 +150,6 @@ export default {
             p.y = (p.origY + Math.sin(angle)*(prox*this.$refs.viewport.clientHeight));
           }
       }
-
-      //update tween
-      TWEEN.update();
       
       //draw items
       if(this.$refs.item){
