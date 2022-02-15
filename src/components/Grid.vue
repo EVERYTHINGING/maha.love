@@ -232,8 +232,8 @@ export default {
 }
 
 .items-wrapper {
-  margin-top: 300px;
-  margin-bottom: 300px;
+  margin-top: 30vh;
+  margin-bottom: 30vh;
 }
 
 .items {
