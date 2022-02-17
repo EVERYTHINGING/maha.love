@@ -1,10 +1,16 @@
+//TODO: deselect all child items of parent when it is deselected
+
 <template>
   <div class="grid" :class="{ 'active': isActive, 'has-selected-item': selectedItem != null }">
     <div ref="viewport" class="viewport">
       <div class="items-wrapper">
         <div ref="items" class="items" :style="'width:'+width+'px;'+'height:'+height+'px;'">
           <template v-for="(item, index) in items" :key=index>
-            <Item ref="item" :item=item v-on:selected="handleSelectedItem" :isSelectable=isActive />
+            <Item ref="item" 
+                  :item=item
+                  :parentGridIsActive=isActive
+                  v-on:selected="handleSelectedItem" 
+                  v-on:deselected="handleDeselectedItem" />
           </template>
         </div>
       </div>
@@ -29,82 +35,97 @@ export default {
     items: Array,
     isActive: Boolean
   },
+  watch: {
+    isActive(value){
+      //if grid is no longer actively open, deselect the selected item
+      if(value === false && this.selectedItem !== null){
+        this.handleDeselectedItem(this.selectedItem);
+      }
+    }
+  },
   data(){
     return {
       width: 0,
       height: 0,
-      selectedItem: null
+      selectedItem: null,
     }
   },
   methods: {
     handleSelectedItem(item){
-      this.selectedItem = item.isSelected ? item : null;
-
-      if(item.isSelected){
-        var tweenDelayMax = 200;
-        var tweenSpeed = 500;
-
-        var offsetX = 50;
-        var offsetY = 50;
-
-        var gridOffsetX = (this.$refs.items.offsetLeft)*-1;
-        var gridOffsetY = (this.$refs.viewport.scrollTop - this.$refs.items.offsetTop);
-
-        var tl = { 
-          x: gridOffsetX + offsetX,
-          y: gridOffsetY + offsetY
-        };
-
-        var tr = { 
-          x: (gridOffsetX + this.$refs.viewport.clientWidth) - offsetX,
-          y: gridOffsetY + offsetY
-        };
-
-        var bl = { 
-          x: gridOffsetX + offsetX,
-          y: gridOffsetY + (this.$refs.viewport.clientHeight - offsetY)
-        };
-
-        var br = { 
-          x: (gridOffsetX + this.$refs.viewport.clientWidth) - offsetX,
-          y: gridOffsetY + (this.$refs.viewport.clientHeight - offsetY)
-        };
-
-        var rand1 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
-        var rand2 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
-        var rand3 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
-        var rand4 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
-
-        var maxDelay = Math.max(rand1, rand2, rand3, rand4);
-
-        var tweenTL = new TWEEN.Tween(this.selectedItem.points.tl)
-                    .to({ x: tl.x, y: tl.y }, tweenSpeed)
-                    .delay(rand1)
-                    .easing(TWEEN.Easing.Elastic.Out)
-                    .start();
-        var tweenTR = new TWEEN.Tween(this.selectedItem.points.tr)
-                    .to({ x: tr.x, y: tr.y }, tweenSpeed)
-                    .delay(rand2)
-                    .easing(TWEEN.Easing.Elastic.Out)
-                    .start();
-        var tweenBR = new TWEEN.Tween(this.selectedItem.points.bl)
-                    .to({ x: bl.x, y: bl.y }, tweenSpeed)
-                    .delay(rand3)
-                    .easing(TWEEN.Easing.Elastic.Out)
-                    .start();
-        var tweenBL = new TWEEN.Tween(this.selectedItem.points.br)
-                    .to({ x: br.x, y: br.y }, tweenSpeed)
-                    .delay(rand4)
-                    .easing(TWEEN.Easing.Elastic.Out)
-                    .start();
-        
-        setTimeout(function(){
-          tweenTL.stop();
-          tweenTR.stop();
-          tweenBR.stop();
-          tweenBL.stop();
-        }, tweenSpeed+maxDelay+100);
+      if(this.selectedItem != null){
+        this.selectedItem.deselect();
       }
+      this.selectedItem = item;
+      this.selectedItem.select();
+
+      var tweenDelayMax = 200;
+      var tweenSpeed = 500;
+
+      var offsetX = 50;
+      var offsetY = 50;
+
+      var gridOffsetX = (this.$refs.items.offsetLeft)*-1;
+      var gridOffsetY = (this.$refs.viewport.scrollTop - this.$refs.items.offsetTop);
+
+      var tl = { 
+        x: gridOffsetX + offsetX,
+        y: gridOffsetY + offsetY
+      };
+
+      var tr = { 
+        x: (gridOffsetX + this.$refs.viewport.clientWidth) - offsetX,
+        y: gridOffsetY + offsetY
+      };
+
+      var bl = { 
+        x: gridOffsetX + offsetX,
+        y: gridOffsetY + (this.$refs.viewport.clientHeight - offsetY)
+      };
+
+      var br = { 
+        x: (gridOffsetX + this.$refs.viewport.clientWidth) - offsetX,
+        y: gridOffsetY + (this.$refs.viewport.clientHeight - offsetY)
+      };
+
+      var rand1 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
+      var rand2 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
+      var rand3 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
+      var rand4 = Math.abs((Math.random()*tweenDelayMax)-(tweenDelayMax/2));
+
+      var maxDelay = Math.max(rand1, rand2, rand3, rand4);
+
+      var tweenTL = new TWEEN.Tween(this.selectedItem.points.tl)
+                  .to({ x: tl.x, y: tl.y }, tweenSpeed)
+                  .delay(rand1)
+                  .easing(TWEEN.Easing.Elastic.Out)
+                  .start();
+      var tweenTR = new TWEEN.Tween(this.selectedItem.points.tr)
+                  .to({ x: tr.x, y: tr.y }, tweenSpeed)
+                  .delay(rand2)
+                  .easing(TWEEN.Easing.Elastic.Out)
+                  .start();
+      var tweenBR = new TWEEN.Tween(this.selectedItem.points.bl)
+                  .to({ x: bl.x, y: bl.y }, tweenSpeed)
+                  .delay(rand3)
+                  .easing(TWEEN.Easing.Elastic.Out)
+                  .start();
+      var tweenBL = new TWEEN.Tween(this.selectedItem.points.br)
+                  .to({ x: br.x, y: br.y }, tweenSpeed)
+                  .delay(rand4)
+                  .easing(TWEEN.Easing.Elastic.Out)
+                  .start();
+      
+      setTimeout(function(){
+        tweenTL.stop();
+        tweenTR.stop();
+        tweenBR.stop();
+        tweenBL.stop();
+      }, tweenSpeed+maxDelay+100);
+    },
+
+    handleDeselectedItem(item){
+      item.deselect();
+      this.selectedItem = null;
     },
 
     loop() {

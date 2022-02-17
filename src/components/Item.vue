@@ -16,10 +16,10 @@ import { Helpers } from '@/helpers.js'
 export default {
   name: 'Item',
   components: { Grid },
-  emits: ['selected'],
+  emits: ['selected', 'deselected'],
   props: {
     item: Object,
-    isSelectable: Boolean
+    parentGridIsActive: Boolean
   },
   data(){
     return {
@@ -28,11 +28,20 @@ export default {
   },
   methods: {
       handleClick(event){
-        if(this.isSelectable){
+        if(this.parentGridIsActive){ //is selectable because parent grid is actively open
           event.stopPropagation();
-          this.isSelected = !this.isSelected;
-          this.$emit('selected', this);
+          if(!this.isSelected){
+            this.$emit('selected', this);
+          }else{
+            this.$emit('deselected', this);
+          }
         }
+      },
+      select(){
+        this.isSelected = true;
+      },
+      deselect(){
+        this.isSelected = false;
       },
       setPoints(points){
           this.points = points;

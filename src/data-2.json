@@ -1,0 +1,76 @@
+{
+    "path": "./work/",
+    "name": "work",
+    "children": [
+        {
+            "path": "work/drawings",
+            "name": "drawings",
+            "children": [
+                {
+                    "path": "work/drawings/1.png",
+                    "name": "1.png"
+                },
+                {
+                    "path": "work/drawings/10.png",
+                    "name": "10.png"
+                },
+                {
+                    "path": "work/drawings/11.png",
+                    "name": "11.png"
+                },
+                {
+                    "path": "work/drawings/12.png",
+                    "name": "12.png"
+                },
+                {
+                    "path": "work/drawings/13.png",
+                    "name": "13.png"
+                },
+                {
+                    "path": "work/drawings/14.png",
+                    "name": "14.png"
+                },
+                {
+                    "path": "work/drawings/15.png",
+                    "name": "15.png"
+                },
+                {
+                    "path": "work/drawings/16.png",
+                    "name": "16.png"
+                },
+                {
+                    "path": "work/drawings/2.png",
+                    "name": "2.png"
+                },
+                {
+                    "path": "work/drawings/3.png",
+                    "name": "3.png"
+                },
+                {
+                    "path": "work/drawings/4.png",
+                    "name": "4.png"
+                },
+                {
+                    "path": "work/drawings/5.png",
+                    "name": "5.png"
+                },
+                {
+                    "path": "work/drawings/6.png",
+                    "name": "6.png"
+                },
+                {
+                    "path": "work/drawings/7.png",
+                    "name": "7.png"
+                },
+                {
+                    "path": "work/drawings/8.png",
+                    "name": "8.png"
+                },
+                {
+                    "path": "work/drawings/9.png",
+                    "name": "9.png"
+                }
+            ]
+        }
+    ]
+}
