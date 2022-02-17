@@ -1,10 +1,11 @@
 <template>
   <div @click="handleClick" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null ? true : false }" :style="'background-color:'+bgColor+');'">
     <template v-if="item.children">
-      <Grid :items="item.children" :isActive="isSelected" />
+      <div class="name">{{ item.name }}</div>
+      <Grid :items="item.children" :isActive="isSelected" :parentGridIsActive="parentGridIsActive" />
     </template>
     <template v-else>
-      <img :src="item.image" />
+      <img :src="item.path" />
     </template>
   </div>
 </template>
@@ -121,5 +122,11 @@ img {
 	max-height: 100%;
 	margin: 0 auto;
   image-rendering: crisp-edges;
+}
+
+.name {
+  position: absolute;
+  top: 0px;
+  left: 0px;
 }
 </style>

@@ -33,7 +33,8 @@ export default {
   },
   props: {
     items: Array,
-    isActive: Boolean
+    isActive: Boolean,
+    parentGridIsActive: Boolean
   },
   watch: {
     isActive(value){
@@ -129,55 +130,58 @@ export default {
     },
 
     loop() {
-      let i, j, p, item, distanceX, distanceY, prox, centerX, centerY, angle;
-      let maxProx = 400;
-      let speed = -100;
-      let speedMulti = 1;
-      /*
-      let fullOffset = Helpers.getAbsolutePosition(this.$refs.items);
-      let mouseX = this.mouse.x.value - fullOffset.x;
-      let mouseY = this.mouse.y.value - fullOffset.y;
-      */
-      let mouseX = this.mouse.x.value - this.$refs.items.offsetLeft;
-      let mouseY = this.mouse.y.value + this.$refs.viewport.scrollTop - this.$refs.items.offsetTop;
+      if(this.parentGridIsActive || !this.loopHasRunOnce){
+        this.loopHasRunOnce = true;
+        let i, j, p, item, distanceX, distanceY, prox, centerX, centerY, angle;
+        let maxProx = 400;
+        let speed = -100;
+        let speedMulti = 1;
+        /*
+        let fullOffset = Helpers.getAbsolutePosition(this.$refs.items);
+        let mouseX = this.mouse.x.value - fullOffset.x;
+        let mouseY = this.mouse.y.value - fullOffset.y;
+        */
+        let mouseX = this.mouse.x.value - this.$refs.items.offsetLeft;
+        let mouseY = this.mouse.y.value + this.$refs.viewport.scrollTop - this.$refs.items.offsetTop;
 
-      if(Helpers.isMobile){
-        mouseX = (this.$refs.viewport.clientWidth/2)  - this.$refs.items.offsetLeft;
-        mouseY = (this.$refs.viewport.clientHeight/2)+ this.$refs.viewport.scrollTop - this.$refs.items.offsetTop;
-      }
+        if(Helpers.isMobile){
+          mouseX = (this.$refs.viewport.clientWidth/2)  - this.$refs.items.offsetLeft;
+          mouseY = (this.$refs.viewport.clientHeight/2)+ this.$refs.viewport.scrollTop - this.$refs.items.offsetTop;
+        }
 
-      let numPoints = this.points.length;
+        let numPoints = this.points.length;
 
-      for(i = 0; i < numPoints; i++){
-          p = this.points[i];
+        for(i = 0; i < numPoints; i++){
+            p = this.points[i];
 
-          if(this.selectedItem == null){
-            distanceX = p.x - mouseX;
-            distanceY = p.y - mouseY;
-            prox = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+            if(this.selectedItem == null){
+              distanceX = p.x - mouseX;
+              distanceY = p.y - mouseY;
+              prox = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
 
-            p.x = (p.x - (distanceX/prox)*(maxProx/prox)*speed*speedMulti) - ((p.x - p.origX)/2);
-            p.y = (p.y - (distanceY/prox)*(maxProx/prox)*speed*speedMulti) - ((p.y - p.origY)/2);
+              p.x = (p.x - (distanceX/prox)*(maxProx/prox)*speed*speedMulti) - ((p.x - p.origX)/2);
+              p.y = (p.y - (distanceY/prox)*(maxProx/prox)*speed*speedMulti) - ((p.y - p.origY)/2);
 
-          }else if(p != this.selectedItem.points.tl && p != this.selectedItem.points.tr && p != this.selectedItem.points.br && p != this.selectedItem.points.bl){
-            centerX = (this.selectedItem.points.tl.origX + (this.selectedItem.points.tr.origX-this.selectedItem.points.tl.origX));
-            centerY = (this.selectedItem.points.tl.origY + (this.selectedItem.points.bl.origY-this.selectedItem.points.tl.origY));
-            distanceX = p.origX - centerX;
-            distanceY = p.origY - centerY;
-            prox = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-            angle = Math.atan2(distanceY, distanceX);
+            }else if(p != this.selectedItem.points.tl && p != this.selectedItem.points.tr && p != this.selectedItem.points.br && p != this.selectedItem.points.bl){
+              centerX = (this.selectedItem.points.tl.origX + (this.selectedItem.points.tr.origX-this.selectedItem.points.tl.origX));
+              centerY = (this.selectedItem.points.tl.origY + (this.selectedItem.points.bl.origY-this.selectedItem.points.tl.origY));
+              distanceX = p.origX - centerX;
+              distanceY = p.origY - centerY;
+              prox = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+              angle = Math.atan2(distanceY, distanceX);
 
-            p.x = (p.origX + Math.cos(angle)*(prox*this.$refs.viewport.clientWidth));
-            p.y = (p.origY + Math.sin(angle)*(prox*this.$refs.viewport.clientHeight));
-          }
-      }
-      
-      //draw items
-      if(this.$refs.item){
-        for(j = 0; j < this.$refs.item.length; j++){
-          item = this.$refs.item[j];
-          item.draw();
-        }	
+              p.x = (p.origX + Math.cos(angle)*(prox*this.$refs.viewport.clientWidth));
+              p.y = (p.origY + Math.sin(angle)*(prox*this.$refs.viewport.clientHeight));
+            }
+        }
+        
+        //draw items
+        if(this.$refs.item){
+          for(j = 0; j < this.$refs.item.length; j++){
+            item = this.$refs.item[j];
+            item.draw();
+          }	
+        }
       }
     }
 
@@ -185,6 +189,7 @@ export default {
 
   mounted() {
     this.points = [];
+    this.loopHasRunOnce = false;
     let numItems = this.items.length;
     let numItemsX = 3;
     if(Helpers.isMobile){ numItemsX = 1; }
