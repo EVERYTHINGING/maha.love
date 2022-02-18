@@ -3,68 +3,214 @@ window.treeData = {
     "name": "work",
     "children": [
         {
-            "path": "work/1.png",
-            "name": "1.png"
-        },
-        {
-            "path": "work/10.png",
-            "name": "10.png"
-        },
-        {
-            "path": "work/11.png",
-            "name": "11.png"
-        },
-        {
-            "path": "work/12.png",
-            "name": "12.png"
-        },
-        {
-            "path": "work/13.png",
-            "name": "13.png"
-        },
-        {
-            "path": "work/14.png",
-            "name": "14.png"
-        },
-        {
-            "path": "work/15.png",
-            "name": "15.png"
-        },
-        {
-            "path": "work/16.png",
-            "name": "16.png"
-        },
-        {
-            "path": "work/2.png",
-            "name": "2.png"
-        },
-        {
-            "path": "work/3.png",
-            "name": "3.png"
-        },
-        {
-            "path": "work/4.png",
-            "name": "4.png"
-        },
-        {
-            "path": "work/5.png",
-            "name": "5.png"
-        },
-        {
-            "path": "work/6.png",
-            "name": "6.png"
-        },
-        {
-            "path": "work/7.png",
-            "name": "7.png"
-        },
-        {
-            "path": "work/8.png",
-            "name": "8.png"
-        },
-        {
-            "path": "work/9.png",
-            "name": "9.png"
+            "path": "work/animation",
+            "name": "animation",
+            "children": [
+                {
+                    "path": "work/animation/1.png",
+                    "name": "1.png"
+                },
+                {
+                    "path": "work/animation/10.png",
+                    "name": "10.png"
+                },
+                {
+                    "path": "work/animation/11.png",
+                    "name": "11.png"
+                },
+                {
+                    "path": "work/animation/12.png",
+                    "name": "12.png"
+                },
+                {
+                    "path": "work/animation/13.png",
+                    "name": "13.png"
+                },
+                {
+                    "path": "work/animation/14.png",
+                    "name": "14.png"
+                },
+                {
+                    "path": "work/animation/15.png",
+                    "name": "15.png"
+                },
+                {
+                    "path": "work/animation/16.png",
+                    "name": "16.png"
+                },
+                {
+                    "path": "work/animation/2.png",
+                    "name": "2.png"
+                },
+                {
+                    "path": "work/animation/2008-2012",
+                    "name": "2008-2012",
+                    "children": [
+                        {
+                            "path": "work/animation/2008-2012/1.png",
+                            "name": "1.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/10.png",
+                            "name": "10.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/11.png",
+                            "name": "11.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/12.png",
+                            "name": "12.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/13.png",
+                            "name": "13.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/14.png",
+                            "name": "14.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/15.png",
+                            "name": "15.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/16.png",
+                            "name": "16.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/2.png",
+                            "name": "2.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/3.png",
+                            "name": "3.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/4.png",
+                            "name": "4.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/5.png",
+                            "name": "5.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/6.png",
+                            "name": "6.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/7.png",
+                            "name": "7.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/8.png",
+                            "name": "8.png"
+                        },
+                        {
+                            "path": "work/animation/2008-2012/9.png",
+                            "name": "9.png"
+                        }
+                    ]
+                },
+                {
+                    "path": "work/animation/2012-2016",
+                    "name": "2012-2016",
+                    "children": [
+                        {
+                            "path": "work/animation/2012-2016/1.png",
+                            "name": "1.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/10.png",
+                            "name": "10.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/11.png",
+                            "name": "11.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/12.png",
+                            "name": "12.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/13.png",
+                            "name": "13.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/14.png",
+                            "name": "14.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/15.png",
+                            "name": "15.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/16.png",
+                            "name": "16.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/2.png",
+                            "name": "2.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/3.png",
+                            "name": "3.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/4.png",
+                            "name": "4.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/5.png",
+                            "name": "5.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/6.png",
+                            "name": "6.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/7.png",
+                            "name": "7.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/8.png",
+                            "name": "8.png"
+                        },
+                        {
+                            "path": "work/animation/2012-2016/9.png",
+                            "name": "9.png"
+                        }
+                    ]
+                },
+                {
+                    "path": "work/animation/3.png",
+                    "name": "3.png"
+                },
+                {
+                    "path": "work/animation/4.png",
+                    "name": "4.png"
+                },
+                {
+                    "path": "work/animation/5.png",
+                    "name": "5.png"
+                },
+                {
+                    "path": "work/animation/6.png",
+                    "name": "6.png"
+                },
+                {
+                    "path": "work/animation/7.png",
+                    "name": "7.png"
+                },
+                {
+                    "path": "work/animation/8.png",
+                    "name": "8.png"
+                },
+                {
+                    "path": "work/animation/9.png",
+                    "name": "9.png"
+                }
+            ]
         },
         {
             "path": "work/drawings",
@@ -482,6 +628,216 @@ window.treeData = {
                 },
                 {
                     "path": "work/interactive/9.png",
+                    "name": "9.png"
+                }
+            ]
+        },
+        {
+            "path": "work/light",
+            "name": "light",
+            "children": [
+                {
+                    "path": "work/light/1.png",
+                    "name": "1.png"
+                },
+                {
+                    "path": "work/light/10.png",
+                    "name": "10.png"
+                },
+                {
+                    "path": "work/light/11.png",
+                    "name": "11.png"
+                },
+                {
+                    "path": "work/light/12.png",
+                    "name": "12.png"
+                },
+                {
+                    "path": "work/light/13.png",
+                    "name": "13.png"
+                },
+                {
+                    "path": "work/light/14.png",
+                    "name": "14.png"
+                },
+                {
+                    "path": "work/light/15.png",
+                    "name": "15.png"
+                },
+                {
+                    "path": "work/light/16.png",
+                    "name": "16.png"
+                },
+                {
+                    "path": "work/light/2.png",
+                    "name": "2.png"
+                },
+                {
+                    "path": "work/light/2008-2012",
+                    "name": "2008-2012",
+                    "children": [
+                        {
+                            "path": "work/light/2008-2012/1.png",
+                            "name": "1.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/10.png",
+                            "name": "10.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/11.png",
+                            "name": "11.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/12.png",
+                            "name": "12.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/13.png",
+                            "name": "13.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/14.png",
+                            "name": "14.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/15.png",
+                            "name": "15.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/16.png",
+                            "name": "16.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/2.png",
+                            "name": "2.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/3.png",
+                            "name": "3.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/4.png",
+                            "name": "4.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/5.png",
+                            "name": "5.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/6.png",
+                            "name": "6.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/7.png",
+                            "name": "7.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/8.png",
+                            "name": "8.png"
+                        },
+                        {
+                            "path": "work/light/2008-2012/9.png",
+                            "name": "9.png"
+                        }
+                    ]
+                },
+                {
+                    "path": "work/light/2012-2016",
+                    "name": "2012-2016",
+                    "children": [
+                        {
+                            "path": "work/light/2012-2016/1.png",
+                            "name": "1.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/10.png",
+                            "name": "10.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/11.png",
+                            "name": "11.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/12.png",
+                            "name": "12.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/13.png",
+                            "name": "13.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/14.png",
+                            "name": "14.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/15.png",
+                            "name": "15.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/16.png",
+                            "name": "16.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/2.png",
+                            "name": "2.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/3.png",
+                            "name": "3.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/4.png",
+                            "name": "4.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/5.png",
+                            "name": "5.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/6.png",
+                            "name": "6.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/7.png",
+                            "name": "7.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/8.png",
+                            "name": "8.png"
+                        },
+                        {
+                            "path": "work/light/2012-2016/9.png",
+                            "name": "9.png"
+                        }
+                    ]
+                },
+                {
+                    "path": "work/light/3.png",
+                    "name": "3.png"
+                },
+                {
+                    "path": "work/light/4.png",
+                    "name": "4.png"
+                },
+                {
+                    "path": "work/light/5.png",
+                    "name": "5.png"
+                },
+                {
+                    "path": "work/light/6.png",
+                    "name": "6.png"
+                },
+                {
+                    "path": "work/light/7.png",
+                    "name": "7.png"
+                },
+                {
+                    "path": "work/light/8.png",
+                    "name": "8.png"
+                },
+                {
+                    "path": "work/light/9.png",
                     "name": "9.png"
                 }
             ]

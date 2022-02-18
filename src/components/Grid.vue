@@ -1,7 +1,8 @@
-//TODO: deselect all child items of parent when it is deselected
+//TODO: tween old selected item's points back to origin
+//TODO: mouse position correct for child grids not yet active
 
 <template>
-  <div class="grid" :class="{ 'active': isActive, 'has-selected-item': selectedItem != null }">
+  <div class="grid" :class="{ 'active': isActive, 'is-main': isMain, 'parent-grid-active': parentGridIsActive, 'has-selected-item': selectedItem != null }">
     <div ref="viewport" class="viewport">
       <div class="items-wrapper">
         <div ref="items" class="items" :style="'width:'+width+'px;'+'height:'+height+'px;'">
@@ -34,7 +35,8 @@ export default {
   props: {
     items: Array,
     isActive: Boolean,
-    parentGridIsActive: Boolean
+    parentGridIsActive: Boolean,
+    isMain: Boolean
   },
   watch: {
     isActive(value){
@@ -62,8 +64,8 @@ export default {
       var tweenDelayMax = 200;
       var tweenSpeed = 500;
 
-      var offsetX = 50;
-      var offsetY = 50;
+      var offsetX = 0;
+      var offsetY = 0;
 
       var gridOffsetX = (this.$refs.items.offsetLeft)*-1;
       var gridOffsetY = (this.$refs.viewport.scrollTop - this.$refs.items.offsetTop);
@@ -245,7 +247,19 @@ export default {
 	left: 0px;
 	width: 100%;
 	height: 100%;
-	overflow-y: hidden;
+	overflow: hidden;
+}
+
+.grid.active > .viewport {
+  overflow-y: scroll;
+}
+
+.grid.parent-grid-active > .viewport {
+  overflow-y: scroll;
+}
+
+.grid.has-selected-item > .viewport {
+  overflow-y: hidden;
 }
 
 .viewport {
@@ -254,16 +268,17 @@ export default {
 	left: 0px;
 	width: 100%;
 	height: 100%;
-	overflow-y: scroll;
-}
-
-.grid.has-selected-item > .viewport {
-  overflow-y: hidden;
+  overflow-x: hidden;
+	overflow-y: hidden;
 }
 
 .items-wrapper {
-  margin-top: 30vh;
-  margin-bottom: 30vh;
+  margin-top: 20vw;
+  margin-bottom: 20vw;
+}
+
+.grid.is-main-grid > .viewport > .items-wrapper {
+  margin-top: 10vw;
 }
 
 .items {

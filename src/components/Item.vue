@@ -1,11 +1,18 @@
+TODO: make pretter the check for the title text
+
 <template>
-  <div @click="handleClick" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null ? true : false }" :style="'background-color:'+bgColor+');'">
+  <div @click="handleClick" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null, 'is-title': item.children != null && item.children.length === 0 }" :style="'background-color:'+bgColor+');'">
     <template v-if="item.children">
-      <div class="name">{{ item.name }}</div>
+      <!-- <div class="close-btn">x</div> -->
+      <div class="name">
+        <div class="name-inner">
+          <span v-for="(char, index) in item.name" :key=index>{{ char }}</span>
+        </div>
+      </div>
       <Grid :items="item.children" :isActive="isSelected" :parentGridIsActive="parentGridIsActive" />
     </template>
     <template v-else>
-      <img :src="item.path" />
+      <img v-if="item.path" :src="item.path" />
     </template>
   </div>
 </template>
@@ -29,6 +36,7 @@ export default {
   },
   methods: {
       handleClick(event){
+        if(this.item.children !== null && this.item.children.length === 0){ return; }
         if(this.parentGridIsActive){ //is selectable because parent grid is actively open
           event.stopPropagation();
           if(!this.isSelected){
@@ -63,7 +71,7 @@ export default {
       }
   },
   setup() {
-      const bgColor = 'rgb('+Math.random()*255+', '+Math.random()*255+', '+Math.random()*255+');'
+      let bgColor = 'rgb('+Math.random()*255+', '+Math.random()*255+', '+Math.random()*255+');'
       return { bgColor }
   },
   mounted(){
@@ -102,8 +110,14 @@ export default {
 	z-index: 9999;	
 }
 
-.item.selected.has-grid {
+.item.selected {
   cursor: w-resize;
+  /* background-color: transparent !important; */
+}
+
+.item.is-title {
+  background-color: transparent !important;
+  cursor: auto;
 }
 
 .item.has-grid,
@@ -128,5 +142,36 @@ img {
   position: absolute;
   top: 0px;
   left: 0px;
+  width: 100%;
+  font-size: 5em;
+  letter-spacing: 0;
+}
+
+.name-inner {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-style: bold;
+}
+
+.item.is-title > .name {
+  height: 100%;
+  font-size: 5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item.selected > .close-btn {
+  display: block;
+}
+
+.close-btn {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 2em;
 }
 </style>
