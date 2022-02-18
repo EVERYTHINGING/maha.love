@@ -1,5 +1,3 @@
-TODO: make pretter the check for the title text
-
 <template>
   <div @click="handleClick" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null, 'is-title': item.children != null && item.children.length === 0 }" :style="'background-color:'+bgColor+');'">
     <template v-if="item.children">
@@ -36,7 +34,6 @@ export default {
   },
   methods: {
       handleClick(event){
-        if(this.item.children !== null && this.item.children.length === 0){ return; }
         if(this.parentGridIsActive){ //is selectable because parent grid is actively open
           event.stopPropagation();
           if(!this.isSelected){
