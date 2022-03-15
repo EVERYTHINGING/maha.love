@@ -86,7 +86,8 @@ export default {
   height: 30vh;
 	margin: 0;
 	overflow: hidden;
-	cursor: pointer;
+	/* cursor: url(/icons/cursor.svg) 32 32 auto; */
+  cursor: pointer;
 	-webkit-perspective: 500;
 	-moz-perspective: 500;
 	-o-perspective: 500;
