@@ -163,7 +163,7 @@ img {
 
 .item.is-title > .name {
   height: 100%;
-  font-size: 5em;
+  font-size: 10vw;
   display: flex;
   justify-content: center;
   align-items: center;
