@@ -137,7 +137,7 @@ export default {
       if(this.parentGridIsActive || !this.loopHasRunOnce){
         this.loopHasRunOnce = true;
         let i, j, p, item, distanceX, distanceY, prox, centerX, centerY, angle;
-        let maxProx = 400;
+        let maxProx = 200;
         let speed = -100;
         let speedMulti = 1;
         /*
@@ -197,8 +197,8 @@ export default {
     let numItems = this.items.length;
     let numItemsX = 3;
     if(Helpers.isMobile){ numItemsX = 1; }
-    let itemWidthPercentage = 20;
-    let itemHeightPercentage = 30;
+    let itemWidthPercentage = 12;
+    let itemHeightPercentage = 18;
     let maxOffset = 20;
     let itemWidth = Math.round(this.$refs.viewport.clientWidth*(itemWidthPercentage/100));
     let itemHeight = Math.round(this.$refs.viewport.clientHeight*(itemHeightPercentage/100));
