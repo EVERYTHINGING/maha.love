@@ -197,8 +197,8 @@ export default {
     let numItems = this.items.length;
     let numItemsX = 3;
     if(Helpers.isMobile){ numItemsX = 1; }
-    let itemWidthPercentage = 12;
-    let itemHeightPercentage = 18;
+    let itemWidthPercentage = 15;
+    let itemHeightPercentage = 20;
     let maxOffset = 20;
     let itemWidth = Math.round(this.$refs.viewport.clientWidth*(itemWidthPercentage/100));
     let itemHeight = Math.round(this.$refs.viewport.clientHeight*(itemHeightPercentage/100));
