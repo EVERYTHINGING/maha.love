@@ -1,5 +1,5 @@
 <template>
-  <div @click="handleClick" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null, 'is-title': item.children != null && item.children.length === 0 }" :style="'background-color:'+bgColor+');'">
+  <div @click="handleClick" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null, 'is-title': item.children != null && item.children.length === 0 }" :style="'background-color:'+bgColor+';'">
     <template v-if="item.children">
       <!-- <div class="close-btn">x</div> -->
       <div class="name">
@@ -25,6 +25,8 @@ export default {
   emits: ['selected', 'deselected'],
   props: {
     item: Object,
+    index: Number,
+    numSiblings: Number,
     parentGridIsActive: Boolean
   },
   data(){
@@ -34,7 +36,7 @@ export default {
   },
   methods: {
       handleClick(event){
-        if(this.parentGridIsActive){ //is selectable because parent grid is actively open
+        if(this.parentGridIsActive && !this.item.title){ //is selectable because parent grid is actively open
           event.stopPropagation();
           if(!this.isSelected){
             this.$emit('selected', this);
@@ -67,8 +69,11 @@ export default {
         }
       }
   },
-  setup() {
-      let bgColor = 'rgb('+Math.random()*255+', '+Math.random()*255+', '+Math.random()*255+');'
+  setup(props) {
+      console.log(props.numSiblings);
+      let hue = Math.floor(360/props.numSiblings)*props.index;
+      let bgColor = `hsl(${hue}, 70%, 80%)`;
+      if(props.item.children != null){ bgColor = `hsl(${hue}, 30%, 60%)`; }
       return { bgColor }
   },
   mounted(){
@@ -86,8 +91,8 @@ export default {
   height: 30vh;
 	margin: 0;
 	overflow: hidden;
-	/* cursor: url(/icons/cursor.svg) 32 32 auto; */
-  cursor: pointer;
+	cursor: url("~@/assets/icons/tap.png"), pointer;
+  /* cursor: pointer; */
 	-webkit-perspective: 500;
 	-moz-perspective: 500;
 	-o-perspective: 500;
@@ -151,6 +156,9 @@ img {
   flex-direction: row;
   justify-content: space-between;
   font-style: bold;
+  /* background: linear-gradient(#eee, #333);
+  background-clip: text;
+  -webkit-text-fill-color: transparent; */
 }
 
 .item.is-title > .name {

@@ -9,6 +9,8 @@
           <template v-for="(item, index) in items" :key=index>
             <Item ref="item" 
                   :item=item
+                  :index=index
+                  :numSiblings=items.length
                   :parentGridIsActive=isActive
                   v-on:selected="handleSelectedItem" 
                   v-on:deselected="handleDeselectedItem" />

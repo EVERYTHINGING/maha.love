@@ -19,9 +19,9 @@ export default {
     }
   },
   setup(){
-    let first = { name: 'mich', children: [] };
-    let second = { name: 'ael\u0020pa', children: [] };
-    let third = { name: 'risi', children: [] };
+    let first = { name: 'mich', children: [], title: true };
+    let second = { name: 'ael\u0020pa', children: [], title: true };
+    let third = { name: 'risi', children: [], title: true };
     window.treeData.children.unshift(third);
     window.treeData.children.unshift(second);
     window.treeData.children.unshift(first);
@@ -34,13 +34,15 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@100&display=swap');
 
 html, body {
   background-color: black;
   color: white;
-  font-size: 1vw;
-  font-family: 'Major Mono Display';
+  font-size: 2vw;
+  text-transform: uppercase;
+  font-family: 'Fredoka One', cursive;
+  font-family: 'Poppins', sans-serif;
   /* background-image: url(/images/bg.png); */
   /* background: -webkit-radial-gradient(circle, #2C5364, #203A43, #0F2027);
   background: radial-gradient(circle, #2C5364, #203A43, #0F2027); */
