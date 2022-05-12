@@ -1,7 +1,7 @@
 <template>
-  <!-- <h1 class="name">
-    <span v-for="(char, index) in 'michaelparisi'" :key=index>{{ char }}</span>
-  </h1> -->
+  <div id="app-bg">
+    <canvas class="glsl-canvas" data-fragment-url="space.glsl" width="100" height="100"></canvas>
+  </div>
   <Grid :items=items :isActive=true :parentGridIsActive=true :isMain=true />
 </template>
 
@@ -9,6 +9,7 @@
 import Grid from '@/components/Grid.vue'
 import { renderQueue } from '@/RenderQueue.js'
 const TWEEN = require('@tweenjs/tween.js')
+import { Canvas } from 'glsl-canvas-js';
 
 export default {
   name: 'App',
@@ -46,6 +47,7 @@ html, body {
   /* background-image: url(/images/bg.png); */
   /* background: -webkit-radial-gradient(circle, #2C5364, #203A43, #0F2027);
   background: radial-gradient(circle, #2C5364, #203A43, #0F2027); */
+  /* background: url('~@/assets/bg.webp') 100% 100%; */
 }
 
 #app {
@@ -54,6 +56,22 @@ html, body {
   left: 0px;
   width: 100vw;
   height: 100vh;
+}
+
+#app-bg {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+#app-bg canvas {
+  width: 25%;
+  height: 25%;
+  transform-origin: top left;
+  transform: scale(4);
 }
 
 .fps {

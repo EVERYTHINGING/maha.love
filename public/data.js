@@ -85,6 +85,24 @@ window.treeData = {
                     "name": "karmic-fields-of-creationpsd.jpg"
                 },
                 {
+                    "path": "work/illustration/om",
+                    "name": "om",
+                    "children": [
+                        {
+                            "path": "work/illustration/om/fire-of-spirit.jpg",
+                            "name": "fire-of-spirit.jpg"
+                        },
+                        {
+                            "path": "work/illustration/om/intelligences.jpg",
+                            "name": "intelligences.jpg"
+                        },
+                        {
+                            "path": "work/illustration/om/karmic-fields-of-creationpsd.jpg",
+                            "name": "karmic-fields-of-creationpsd.jpg"
+                        }
+                    ]
+                },
+                {
                     "path": "work/illustration/samsaric-unfurnelling.jpg",
                     "name": "samsaric-unfurnelling.jpg"
                 },

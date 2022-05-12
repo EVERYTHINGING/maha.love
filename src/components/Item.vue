@@ -73,7 +73,7 @@ export default {
       console.log(props.numSiblings);
       let hue = Math.floor(360/props.numSiblings)*props.index;
       let bgColor = `hsl(${hue}, 70%, 80%)`;
-      if(props.item.children != null){ bgColor = `hsl(${hue}, 30%, 60%)`; }
+      if(props.item.children != null){ bgColor = `transparent`; }
       return { bgColor }
   },
   mounted(){
@@ -164,6 +164,7 @@ img {
 .item.is-title > .name {
   height: 100%;
   font-size: 10vw;
+  font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
