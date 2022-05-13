@@ -87,11 +87,11 @@ export default {
 	position: absolute;
 	top: 0px;
 	left: 0px;
-  width: 30vw;
-  height: 30vh;
+  width: 20vw;
+  height: 20vh;
 	margin: 0;
 	overflow: hidden;
-	cursor: url("~@/assets/icons/tap.png"), pointer;
+	cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAzElEQVRYR+2X0Q6AIAhF5f8/2jYXZkwEjNSVvVUjDpcrGgT7FUkI2D9xRfQETwNIiWO85wfINfQUEyxBG2ArsLwC0jioGt5zFcwF4OYDPi/mBYKm4t0U8ATgRm3ThFoAqkhNgWkA0jJLvaOVSs7j3qMnSgXWBMiWPXe94QqMBMBc1VZIvaTu5u5pQewq0EqNZvIEMCmxAawK0DNkay9QmfFNAJUXfgGgUkLaE7j/h8fnASkxHTz0DGIBMCnBeeM7AArpUd3mz2x3C7wADglA8BcWMZhZAAAAAElFTkSuQmCC), pointer;
   /* cursor: pointer; */
 	-webkit-perspective: 500;
 	-moz-perspective: 500;
@@ -114,13 +114,13 @@ export default {
 }
 
 .item.selected {
-  cursor: w-resize;
+  	cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAANtJREFUWEflluEOhCAMg+X9HxqjEQPNgA4dw3g/7zj2tXSDsDl/gnP97QlABPihvYb+dBV2AzgLx1jWD+HWohKlWpwrXw4g5SFz4v6qFfTXHJgJkGqJWUC1vWyMOGAGgG2lmlEYStaJ3AE3AOosVXY0FmOXHA78CwDbdboDEkDRVuxZN0axuEVt/XAXWADUxJuENHUDMwm/ASDcgoWjTAYeHYE5ANL1Zn9NDd6OdAbcAXqKzY/AE0CclD2gxnug+InJwFoArHL2dax2wBNAe2tS4qhFECj27UjtvQNkKX4TTbCuewAAAABJRU5ErkJggg==), pointer;
   /* background-color: transparent !important; */
 }
 
 .item.is-title {
   background-color: transparent !important;
-  cursor: auto;
+  cursor: none;
 }
 
 .item.has-grid,

@@ -12,19 +12,19 @@ uniform vec2 u_resolution;
 #define mouse u_mouse
 #define resolution u_resolution
 #define iterations 4
-#define formuparam2 0.8
+#define formuparam2 0.4
  
 #define volsteps 4
 #define stepsize 0.190
  
-#define zoom 5.900
-#define tile   0.450
+#define zoom 10.900
+#define tile   0.650
 #define speed2  0.010
  
 #define brightness 0.1
 #define darkmatter 0.400
-#define distfading 0.560
-#define saturation 0.400
+#define distfading 0.960
+#define saturation 0.000
 
 
 #define transverseSpeed 1.
