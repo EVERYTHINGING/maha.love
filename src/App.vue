@@ -1,6 +1,6 @@
 <template>
   <div id="app-bg">
-    <canvas class="glsl-canvas" data-fragment-url="space.glsl" width="100" height="100"></canvas>
+    <!-- <canvas class="glsl-canvas" data-fragment-url="space.glsl" width="100" height="100"></canvas> -->
   </div>
   <Grid :items=items :isActive=true :parentGridIsActive=true :isMain=true />
 </template>
