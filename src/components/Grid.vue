@@ -25,6 +25,7 @@
 import { useMouse } from '@vueuse/core'
 import { Helpers } from '@/helpers.js'
 import { renderQueue } from '@/RenderQueue.js'
+import { StringDecoder } from 'string_decoder'
 const TWEEN = require('@tweenjs/tween.js')
 
 export default {
@@ -56,7 +57,31 @@ export default {
     }
   },
   methods: {
-    handleSelectedItem(item){
+    handleKeyPress(event){
+
+      if(this.selectedItem != null && this.isActive){
+        if(this.selectedItem.$refs.grid){
+          if(this.selectedItem.$refs.grid.selectedItem){ return; }
+        }
+
+        let selectedItemIndex = this.selectedItem.index;
+        let newIndex = 0;
+        if(event.key === 'ArrowLeft'){
+          newIndex = selectedItemIndex === 0 ? newIndex = this.$refs.item.length-1 : newIndex = selectedItemIndex-1;
+          console.log('left pressed!', newIndex)
+        }else if(event.key === 'ArrowRight'){
+          newIndex = selectedItemIndex === this.$refs.item.length-1 ? newIndex = 0 : newIndex = selectedItemIndex+1;
+          console.log('right pressed!', newIndex)
+        }
+
+        this.handleSelectedItem(this.$refs.item[newIndex], true);
+      }
+  
+    },
+
+    handleSelectedItem(item, fromKeyPress = false){
+      if(!fromKeyPress){ window.addEventListener("keydown", this.handleKeyPress); }
+
       if(this.selectedItem != null){
         this.selectedItem.deselect();
       }
@@ -129,6 +154,7 @@ export default {
     },
 
     handleDeselectedItem(item){
+      window.removeEventListener("keydown", this.handleKeyPress);
       item.deselect();
       this.selectedItem = null;
     },

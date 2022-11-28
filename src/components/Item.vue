@@ -7,7 +7,7 @@
           <span v-for="(char, index) in item.name" :key=index>{{ char }}</span>
         </div>
       </div>
-      <Grid :items="item.children" :isActive="isSelected" :parentGridIsActive="parentGridIsActive" />
+      <Grid ref="grid" :items="item.children" :isActive="isSelected" :parentGridIsActive="parentGridIsActive" />
     </template>
     <template v-else>
       <img v-if="item.path" :src="item.path" />
