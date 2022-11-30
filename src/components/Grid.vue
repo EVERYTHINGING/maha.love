@@ -74,7 +74,12 @@ export default {
           console.log('right pressed!', newIndex)
         }
 
-        this.handleSelectedItem(this.$refs.item[newIndex], true);
+        this.handleDeselectedItem(this.selectedItem, true);
+        let that = this;
+        setTimeout(function(){
+          that.handleSelectedItem(that.$refs.item[newIndex], true);
+        }, 200);
+        
       }
   
     },
@@ -153,8 +158,8 @@ export default {
       }, tweenSpeed+maxDelay+100);
     },
 
-    handleDeselectedItem(item){
-      window.removeEventListener("keydown", this.handleKeyPress);
+    handleDeselectedItem(item, fromKeyPress = false){
+      if(!fromKeyPress){ window.removeEventListener("keydown", this.handleKeyPress); }
       item.deselect();
       this.selectedItem = null;
     },
