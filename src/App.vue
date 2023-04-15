@@ -3,6 +3,8 @@
     <!-- <canvas class="glsl-canvas" data-fragment-url="space.glsl" width="100" height="100"></canvas> -->
   </div>
   <Grid :items=items :isActive=true :parentGridIsActive=true :isMain=true />
+
+  <iframe src="https://widget.0xecho.com?color-theme=dark&desc=&has-h-padding=true&has-v-padding=true&modules=comment%2Clike%2Ctip&receiver=0x869Cc837A999c3cE0AF1b02C2C2ca444ecC8aB74&target_uri=https%3A%2F%2Fmaha.love" frameborder="0"></iframe>
 </template>
 
 <script>
