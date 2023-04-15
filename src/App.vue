@@ -46,7 +46,7 @@ html, body {
   text-transform: uppercase;
   font-family: 'Fredoka One', cursive;
   font-family: 'Poppins', sans-serif;
-  cursor: none;
+  /* cursor: none; */
   /* background-image: url(/images/bg.png); */
   /* background: -webkit-radial-gradient(circle, #2C5364, #203A43, #0F2027);
   background: radial-gradient(circle, #2C5364, #203A43, #0F2027); */
