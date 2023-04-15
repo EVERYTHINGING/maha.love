@@ -53,6 +53,10 @@ html, body {
   /* background: url('~@/assets/bg.webp') 100% 100%; */
 }
 
+iframe {
+  cursor: pointer;
+}
+
 #app {
   position: absolute;
   top: 0px;
