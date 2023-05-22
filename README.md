@@ -1,4 +1,4 @@
-# stickygrid-vue3
+# maha.love
 
 ## Project setup
 ```
