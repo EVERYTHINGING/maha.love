@@ -1,17 +1,19 @@
 <template>
   <div @click="handleClick" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null, 'is-title': item.children != null && item.children.length === 0 }" :style="'background-color:'+bgColor+';'">
-    <template v-if="item.children">
-      <!-- <div class="close-btn">x</div> -->
-      <div class="name">
-        <div class="name-inner">
-          <span v-for="(char, index) in item.name" :key=index>{{ char }}</span>
+    <div class="item-inner">
+      <template v-if="item.children">
+        <!-- <div class="close-btn">x</div> -->
+        <div class="name">
+          <div class="name-inner">
+            <span v-for="(char, index) in item.name" :key=index>{{ char }}</span>
+          </div>
         </div>
-      </div>
-      <Grid ref="grid" :items="item.children" :isActive="isSelected" :parentGridIsActive="parentGridIsActive" />
-    </template>
-    <template v-else>
-      <img v-if="item.path" :src="item.path" />
-    </template>
+        <Grid ref="grid" :items="item.children" :isActive="isSelected" :parentGridIsActive="parentGridIsActive" />
+      </template>
+      <template v-else>
+        <img v-if="item.path" :src="item.path" />
+      </template>
+    </div>
   </div>
 </template>
 
@@ -104,9 +106,9 @@ export default {
 	-ms-transform-origin: left top;
 	transform-origin: left top;
 
-	display: flex;
+	/* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 }
 
 .item:hover {
@@ -127,6 +129,16 @@ export default {
 .item.selected {
   width: 100vw;
   height: 100vh;
+}
+
+.item-inner {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  /* border: solid 5px greenyellow; */
+  transform-origin: center center;
 }
 
 .item.selected img {
