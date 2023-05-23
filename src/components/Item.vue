@@ -135,7 +135,7 @@ export default {
 
 img {
 	display: block;
-	height: auto;
+	height: 100%;
 	max-height: 100%;
 	margin: 0 auto;
   image-rendering: crisp-edges;
