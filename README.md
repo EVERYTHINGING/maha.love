@@ -1,4 +1,4 @@
-# maha.love
+# maha.love!
 
 ## Project setup
 ```
