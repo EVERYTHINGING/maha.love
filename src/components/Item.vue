@@ -208,7 +208,7 @@ img {
   width: 100%;
   font-size: 5em;
   letter-spacing: 0;
-  z-index: 1;
+  z-index: 0;
 }
 
 .name-inner {
