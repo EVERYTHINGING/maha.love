@@ -53,7 +53,7 @@ export default {
     return {
       width: 0,
       height: 0,
-      selectedItem: null,
+      selectedItem: null
     }
   },
   methods: {
@@ -219,9 +219,7 @@ export default {
         }
       }
     }
-
   },
-
   mounted() {
     this.points = [];
     this.loopHasRunOnce = false;
@@ -318,12 +316,6 @@ export default {
 	transform-style: preserve-3d;
 	position: relative;
 	margin: 0 auto;
-  /* opacity: 0.5; */
-  /* transition: opacity 0.1s ease-in-out; */
-}
-
-.items:hover {
-  /* opacity: 1; */
 }
 
 /* .grid.has-selected-item .items:first-child {
