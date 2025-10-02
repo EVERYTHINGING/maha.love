@@ -85,7 +85,7 @@ export default {
     },
 
     handleSelectedItem(item, fromKeyPress = false){
-      if(!fromKeyPress){ window.addEventListener("keydown", this.handleKeyPress); }
+      //if(!fromKeyPress){ window.addEventListener("keydown", this.handleKeyPress); }
 
       if(this.selectedItem != null){
         this.selectedItem.deselect();
@@ -150,16 +150,21 @@ export default {
                   .easing(TWEEN.Easing.Elastic.Out)
                   .start();
       
-      setTimeout(function(){
+      setTimeout(() => {
         tweenTL.stop();
         tweenTR.stop();
         tweenBR.stop();
         tweenBL.stop();
+        if(this.selectedItem && typeof this.selectedItem.bumpCarouselVersion === 'function'){
+          this.selectedItem.bumpCarouselVersion();
+        }else{
+          window.dispatchEvent(new Event('resize'));
+        }
       }, tweenSpeed+maxDelay+100);
     },
 
     handleDeselectedItem(item, fromKeyPress = false){
-      if(!fromKeyPress){ window.removeEventListener("keydown", this.handleKeyPress); }
+      //if(!fromKeyPress){ window.removeEventListener("keydown", this.handleKeyPress); }
       item.deselect();
       this.selectedItem = null;
     },

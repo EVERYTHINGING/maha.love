@@ -1,6 +1,6 @@
 <template>
   
-  <div @click="handleClick" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null, 'is-title': item.children != null && item.children.length === 0 }" :style="itemStyle">
+  <div @click="handleClick" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null, 'is-title': item.children != null && item.children.length === 0 }" :style="itemStyle">
     <div class="gradient-bg" v-if="!item.children" :style="gradientStyle"></div>
     <template v-if="item.children">
       <!-- <div class="close-btn">x</div> -->
@@ -12,7 +12,40 @@
       <Grid ref="grid" :items="item.children" :isActive="isSelected" :parentGridIsActive="parentGridIsActive" />
     </template>
     <template v-else>
-      <img v-if="item.path" :src="item.path" />
+      <div v-if="hasMedia">
+        <div v-if="!isSelected" class="media-preview">
+          <video v-if="isVideoPath(firstMedia)" :src="firstMedia" autoplay muted loop playsinline></video>
+          <img v-else :src="firstMedia" />
+        </div>
+        <div v-if="!isSelected && displayName" class="media-hover-name" :class="{ visible: isHovered }">
+          <div class="media-hover-name__inner">
+            <span v-for="(char, index) in displayChars" :key="index">{{ char }}</span>
+          </div>
+        </div>
+        <div v-else class="media-selected" @click="onCarouselClick">
+      <div class="media-carousel">
+            <Carousel :key="carouselKey" ref="carousel" :items-to-show="1" :wrap-around="true">
+              <Slide v-for="(src, mIndex) in item.media" :key="mIndex">
+                <video v-if="isVideoPath(src)" :src="src" controls playsinline preload="metadata"></video>
+                <img v-else :src="src" />
+              </Slide>
+              <template #addons>
+                <Navigation @click.stop />
+                <Pagination @click.stop />
+              </template>
+            </Carousel>
+          </div>
+          <div v-if="item.description && isSelected" class="media-caption" @click.stop>
+            <div v-if="item.name" class="media-caption__name">{{ item.name }}</div>
+            <div v-if="item.title" class="media-caption__title">{{ item.title }}</div>
+            <div class="media-caption__description">{{ item.description }}</div>
+          </div>
+        </div>
+      </div>
+      <template v-else>
+        <video v-if="isVideo && hasSrc" :key="item.path" :src="item.path" autoplay muted loop playsinline></video>
+        <img v-else-if="hasSrc" :src="item.path" />
+      </template>
     </template>
   </div>
 </template>
@@ -20,10 +53,12 @@
 <script>
 import Grid from '@/components/Grid.vue'
 import { Helpers } from '@/helpers.js'
+import 'vue3-carousel/dist/carousel.css'
+import { Carousel, Slide, Navigation, Pagination } from 'vue3-carousel'
 
 export default {
   name: 'Item',
-  components: { Grid },
+  components: { Grid, Carousel, Slide, Navigation, Pagination },
   emits: ['selected', 'deselected'],
   props: {
     item: Object,
@@ -31,9 +66,21 @@ export default {
     numSiblings: Number,
     parentGridIsActive: Boolean
   },
+  watch: {
+    isSelected(newVal){
+      if(newVal){
+        this.$nextTick(() => {
+          window.dispatchEvent(new Event('resize'));
+          setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+        });
+      }
+    }
+  },
   data(){
     return {
-      isSelected: false
+      isSelected: false,
+      isHovered: false,
+      carouselVersion: 0
     }
   },
   computed: {
@@ -51,9 +98,43 @@ export default {
       // We use the item index to ensure the delay is consistent across renders
       const randomDelay = (this.index * -8) % 40; // -8s per index, modulo 40s (animation duration)
       return `animation-delay: ${randomDelay}s;`;
+    },
+    isVideo() {
+      return this.item && this.item.path && /\.mp4$/i.test(this.item.path);
+    },
+    hasSrc() {
+      return !!(this.item && this.item.path);
+    },
+    hasMedia() {
+      return !!(this.item && this.item.media && this.item.media.length > 0);
+    },
+    firstMedia(){
+      return this.hasMedia ? this.item.media[0] : null;
+    },
+    displayName(){
+      return (this.item && (this.item.name || this.item.title)) ? (this.item.name || this.item.title) : '';
+    },
+    displayChars(){
+      return this.displayName ? this.displayName.split('') : [];
+    },
+    carouselKey(){
+      const nameOrIndex = (this.item && (this.item.name || this.item.title)) ? (this.item.name || this.item.title) : this.index;
+      const mediaLen = (this.item && this.item.media) ? this.item.media.length : 0;
+      return `${nameOrIndex}-${this.carouselVersion}-${mediaLen}`;
     }
   },
   methods: {
+      onMouseEnter(){ this.isHovered = true; },
+      onMouseLeave(){ this.isHovered = false; },
+      onCarouselClick(event){
+        const target = event.target;
+        if(target && (target.closest('.carousel__prev') || target.closest('.carousel__next') || target.closest('.carousel__pagination') || target.closest('.carousel__pagination-button'))){
+          event.stopPropagation();
+        }
+      },
+      isVideoPath(src){
+        return /\.(mp4|webm|ogg|mov)$/i.test(src || '');
+      },
       handleClick(event){
         if(this.parentGridIsActive && !this.item.title){ //is selectable because parent grid is actively open
           event.stopPropagation();
@@ -86,6 +167,12 @@ export default {
                     this.points.br.y,
                     0);
         }
+      },
+      bumpCarouselVersion(){
+        this.carouselVersion++;
+        this.$nextTick(() => {
+          window.dispatchEvent(new Event('resize'));
+        });
       }
   },
   setup(props) {
@@ -199,6 +286,127 @@ img {
   image-rendering: crisp-edges;
   position: relative;
   z-index: 1;
+}
+
+video {
+	display: block;
+	height: 100%;
+	max-height: 100%;
+	margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.media-carousel {
+	position: relative;
+	width: 100%;
+	height: 65vh;
+}
+
+.media-carousel ::v-deep(.carousel) {
+	height: 100%;
+	--vc-pgn-border-radius: 50%;
+	--vc-pgn-width: 8px;
+	--vc-pgn-height: 8px;
+	--vc-pgn-gap: 8px;
+}
+.media-carousel ::v-deep(.carousel__viewport) {
+	height: 100%;
+}
+.media-carousel ::v-deep(.carousel__track) {
+	height: 100%;
+}
+.media-carousel ::v-deep(.carousel__slide) {
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Ensure media fills slide width while fitting within height */
+.media-carousel img,
+.media-carousel video {
+	width: 100% !important;
+	height: 100% !important;
+	object-fit: contain;
+}
+
+.media-preview {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.media-preview img,
+.media-preview video {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.media-hover-name {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0,0,0,0.55);
+	backdrop-filter: blur(2px);
+	text-align: center;
+	opacity: 0;
+	transition: opacity 160ms ease-in-out;
+	pointer-events: none;
+	z-index: 2;
+	overflow: hidden; /* prevent text from extending past item */
+}
+.media-hover-name.visible {
+	opacity: 1;
+}
+
+.media-hover-name__inner {
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	font-weight: bold;
+	font-size: clamp(1.25rem, 7vw, 0.5em);
+	letter-spacing: 0;
+	line-height: 1em;
+	transform: translateY(1em);
+	transition: transform 200ms ease-out;
+	flex-wrap: nowrap;
+	overflow: hidden;
+}
+.media-hover-name.visible .media-hover-name__inner {
+	transform: translateY(0);
+}
+
+.media-caption {
+  color: black;
+	padding: 16px;
+	backdrop-filter: blur(2px);
+	font-size: 1.5em;
+	line-height: 1.4;
+}
+.media-caption__name {
+	font-weight: bold;
+}
+.media-caption__title {
+	opacity: 0.85;
+}
+.media-caption__description {
+	margin-top: 8px;
+	text-transform: none;
+}
+
+/* Fallback to ensure pagination are dots */
+.media-carousel ::v-deep(.carousel__pagination-button) {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
 }
 
 .name {

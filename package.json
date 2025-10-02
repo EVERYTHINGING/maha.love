@@ -13,7 +13,8 @@
     "core-js": "^3.6.5",
     "fps-m": "^1.1.2",
     "glsl-canvas-js": "^0.2.9",
-    "vue": "^3.0.0"
+    "vue": "^3.0.0",
+    "vue3-carousel": "^0.16.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^5.0.4",
