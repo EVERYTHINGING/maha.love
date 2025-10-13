@@ -23,6 +23,7 @@ export default {
     let first = { name: 'mich', children: [], title: true };
     let second = { name: 'aelpa', children: [], title: true };
     let third = { name: 'risi', children: [], title: true };
+    
     window.treeData.children.unshift(third);
     window.treeData.children.unshift(second);
     window.treeData.children.unshift(first);

@@ -68,18 +68,29 @@ window.treeData = {
             "path": "work/motion",
             "name": "motion",
             "children": [
-                // {
-                //     "path": "work/motion/samsara-torus.mp4",
-                //     "name": "samsara-torus.mp4"
-                // },
-                // {
-                //     "path": "work/motion/welcome-ferns.mp4",
-                //     "name": "welcome-ferns.mp4"
-                // },
-                // {
-                //     "path": "work/motion/home-ferns.mp4",
-                //     "name": "home-ferns.mp4"
-                // }
+                {
+                    "path": "work/motion/samsara-torus.mp4",
+                    "name": "samsara-torus.mp4"
+                },
+                {
+                    "path": "work/motion/welcome-ferns.mp4",
+                    "name": "welcome-ferns.mp4"
+                },
+                {
+                    "path": "work/motion/home-ferns.mp4",
+                    "name": "home-ferns.mp4"
+                }
+            ]
+        },
+        {
+            "path": "work/interactive",
+            "name": "interactive",
+            "children": [
+                {
+                    "path": "work/interactive/game-of-life-pure-gl/",
+                    "name": "Beingness",
+                    "index": "index.html"
+                }
             ]
         },
         {

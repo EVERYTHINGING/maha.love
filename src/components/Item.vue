@@ -3,7 +3,7 @@
   <div @click="handleClick" @mouseenter="onMouseEnter" @mouseleave="onMouseLeave" class="item" :class="{ selected: isSelected, 'has-grid': item.children != null, 'is-title': item.children != null && item.children.length === 0 }" :style="itemStyle">
     <div class="gradient-bg" v-if="!item.children" :style="gradientStyle"></div>
     <template v-if="item.children">
-      <!-- <div class="close-btn">x</div> -->
+      <div v-if="isSelected && hasIndex" class="close-btn" @click.stop="$emit('deselected', this)">×</div>
       <div class="name">
         <div class="name-inner">
           <span v-for="(char, index) in item.name" :key=index>{{ char }}</span>
@@ -12,7 +12,20 @@
       <Grid ref="grid" :items="item.children" :isActive="isSelected" :parentGridIsActive="parentGridIsActive" />
     </template>
     <template v-else>
-      <div v-if="hasMedia">
+      <div v-if="item.index">
+        <div v-if="isSelected" class="close-btn" @click.stop="$emit('deselected', this)">×</div>
+        <div v-if="!isSelected" class="media-preview">
+          <div v-if="!isSelected && displayName" class="media-hover-name" :class="{ visible: isHovered }">
+            <div class="media-hover-name__inner">
+              <span v-for="(char, index) in displayChars" :key="index">{{ char }}</span>
+            </div>
+          </div>
+        </div>
+        <div v-if="isSelected" class="embedded-app" @click="onCarouselClick">
+          <iframe :src="indexSrc" frameborder="0"></iframe>
+        </div>
+      </div>
+      <div v-else-if="hasMedia">
         <div v-if="!isSelected" class="media-preview">
           <video v-if="isVideoPath(firstMedia)" :src="firstMedia" autoplay muted loop playsinline></video>
           <img v-else :src="firstMedia" />
@@ -22,24 +35,28 @@
             <span v-for="(char, index) in displayChars" :key="index">{{ char }}</span>
           </div>
         </div>
-        <div v-else class="media-selected" @click="onCarouselClick">
-      <div class="media-carousel">
+        <div v-if="isSelected" class="media-selected" @click="onCarouselClick">
+      <transition name="carousel-mask" @after-enter="onCarouselAfterEnter">
+          <div v-if="showCarousel" class="media-carousel">
             <Carousel :key="carouselKey" ref="carousel" :items-to-show="1" :wrap-around="true">
               <Slide v-for="(src, mIndex) in item.media" :key="mIndex">
                 <video v-if="isVideoPath(src)" :src="src" controls playsinline preload="metadata"></video>
                 <img v-else :src="src" />
               </Slide>
               <template #addons>
-                <Navigation @click.stop />
-                <Pagination @click.stop />
+                <Navigation />
+                <Pagination />
               </template>
             </Carousel>
           </div>
-          <div v-if="item.description && isSelected" class="media-caption" @click.stop>
-            <div v-if="item.name" class="media-caption__name">{{ item.name }}</div>
-            <div v-if="item.title" class="media-caption__title">{{ item.title }}</div>
-            <div class="media-caption__description">{{ item.description }}</div>
-          </div>
+        </transition>
+          <transition name="caption-slide-fade">
+            <div v-if="item.description && isSelected && showCaption" class="media-caption" @click.stop>
+              <div v-if="item.name" class="media-caption__name">{{ item.name }}</div>
+              <div v-if="item.title" class="media-caption__title">{{ item.title }}</div>
+              <div class="media-caption__description">{{ item.description }}</div>
+            </div>
+          </transition>
         </div>
       </div>
       <template v-else>
@@ -80,7 +97,10 @@ export default {
     return {
       isSelected: false,
       isHovered: false,
-      carouselVersion: 0
+      carouselVersion: 0,
+      showCarousel: false,
+      showCaption: false,
+      carouselDelayTimer: null
     }
   },
   computed: {
@@ -117,6 +137,14 @@ export default {
     displayChars(){
       return this.displayName ? this.displayName.split('') : [];
     },
+    hasIndex(){
+      return !!(this.item && this.item.index);
+    },
+    indexSrc(){
+      if(!this.item || !this.item.path){ return null; }
+      const indexName = this.item.index || 'index.html';
+      return `${this.item.path}${indexName}`;
+    },
     carouselKey(){
       const nameOrIndex = (this.item && (this.item.name || this.item.title)) ? (this.item.name || this.item.title) : this.index;
       const mediaLen = (this.item && this.item.media) ? this.item.media.length : 0;
@@ -150,23 +178,41 @@ export default {
       },
       deselect(){
         this.isSelected = false;
+        this.showCarousel = false;
+        this.showCaption = false;
+        if(this.carouselDelayTimer){
+          clearTimeout(this.carouselDelayTimer);
+          this.carouselDelayTimer = null;
+        }
       },
       setPoints(points){
           this.points = points;
       },
       draw(){
-        if(!this.points.tl.isAtOrigin() || !this.points.tr.isAtOrigin() || !this.points.bl.isAtOrigin() || !this.points.br.isAtOrigin()){
+        const p = this.points;
+        if(!p || !p.tl || !p.tr || !p.bl || !p.br){ return; }
+        if(!p.tl.isAtOrigin() || !p.tr.isAtOrigin() || !p.bl.isAtOrigin() || !p.br.isAtOrigin()){
           Helpers.ComputeMatrix.transform2d(this.$el, 
-                    this.points.tl.x,
-                    this.points.tl.y,
-                    this.points.tr.x,
-                    this.points.tr.y,
-                    this.points.bl.x,
-                    this.points.bl.y,
-                    this.points.br.x,
-                    this.points.br.y,
+                    p.tl.x,
+                    p.tl.y,
+                    p.tr.x,
+                    p.tr.y,
+                    p.bl.x,
+                    p.bl.y,
+                    p.br.x,
+                    p.br.y,
                     0);
         }
+      },
+      onCarouselAfterEnter(){
+        this.showCaption = true;
+        this.bumpCarouselVersion();
+      },
+      startCarouselTransition(){
+        // Show carousel first; caption will animate after @after-enter
+        this.showCaption = false;
+        if(this.carouselDelayTimer){ clearTimeout(this.carouselDelayTimer); this.carouselDelayTimer = null; }
+        this.showCarousel = true;
       },
       bumpCarouselVersion(){
         this.carouselVersion++;
@@ -302,6 +348,30 @@ video {
 	width: 100%;
 	height: 65vh;
 }
+.embedded-app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+.embedded-app iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.carousel-mask-enter-active,
+.carousel-mask-leave-active {
+	transition: opacity 250ms ease, clip-path 500ms ease;
+}
+.carousel-mask-enter-from,
+.carousel-mask-leave-to {
+	opacity: 0;
+	clip-path: inset(0 0 100% 0 round 0);
+}
+.carousel-mask-enter-to,
+.carousel-mask-leave-from {
+	opacity: 1;
+	clip-path: inset(0 0 0 0 round 0);
+}
 
 .media-carousel ::v-deep(.carousel) {
 	height: 100%;
@@ -391,8 +461,44 @@ video {
 	font-size: 1.5em;
 	line-height: 1.4;
 }
+.caption-slide-fade-enter-active,
+.caption-slide-fade-leave-active {
+	transition: opacity 300ms ease 100ms, transform 300ms ease 100ms;
+}
+.caption-slide-fade-enter-from,
+.caption-slide-fade-leave-to {
+	opacity: 0;
+	transform: translateY(1.4em);
+}
+.caption-slide-fade-enter-to,
+.caption-slide-fade-leave-from {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* Stagger inner caption lines (title then description) */
+.media-caption__title,
+.media-caption__description {
+	transition: opacity 500ms ease, transform 500ms ease;
+}
+.caption-slide-fade-enter-from .media-caption__title,
+.caption-slide-fade-enter-from .media-caption__description {
+	opacity: 0;
+	transform: translateY(1.4em);
+}
+.caption-slide-fade-enter-to .media-caption__title {
+	opacity: 1;
+	transform: translateY(0);
+	transition-delay: 200ms;
+}
+.caption-slide-fade-enter-to .media-caption__description {
+	opacity: 1;
+	transform: translateY(0);
+	transition-delay: 400ms;
+}
 .media-caption__name {
 	font-weight: bold;
+  letter-spacing: 0.5em;
 }
 .media-caption__title {
 	opacity: 0.85;
@@ -400,6 +506,7 @@ video {
 .media-caption__description {
 	margin-top: 8px;
 	text-transform: none;
+  font-size: 0.5em;
 }
 
 /* Fallback to ensure pagination are dots */
